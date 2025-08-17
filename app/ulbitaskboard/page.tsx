@@ -27,8 +27,8 @@ export default function UlbiTVTaskBoard(): JSX.Element {
 
     function dragOverHandler(e: DragEvent<HTMLDivElement>) {
         e.preventDefault();
-        if (e.currentTarget.className === 'item') {
-            e.currentTarget.style.boxShadow = '0 4px 5px yellow';
+        if (/* e.currentTarget.className === 'item' */e.currentTarget.classList.contains('item')) {
+            e.currentTarget.style.boxShadow = '0 4px 5px red';
         }
     }
 
@@ -49,7 +49,7 @@ export default function UlbiTVTaskBoard(): JSX.Element {
         e.preventDefault();
 
         if (!currentBoard || !currentItem) return;
-
+       
         const currentIndex = currentBoard.items.indexOf(currentItem);
         currentBoard?.items.splice(currentIndex, 1);
         const dropIndex = board.items.indexOf(item);
@@ -65,6 +65,7 @@ export default function UlbiTVTaskBoard(): JSX.Element {
 
     function dropCardHandler(e: DragEvent<HTMLDivElement>, board: IBoard) {
         if (!currentItem || !currentBoard) return;
+        if (board.items.find(i => i.id === currentItem.id)) return;
 
         board.items.push(currentItem);
         const currentIndex = currentBoard?.items.indexOf(currentItem);
